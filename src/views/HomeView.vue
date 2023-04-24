@@ -2,7 +2,15 @@
  * @Author: 鹏程 李 1494205676@qq.com
  * @Date: 2023-04-20 22:59:23
  * @LastEditors: 鹏程 李 1494205676@qq.com
- * @LastEditTime: 2023-04-22 17:09:32
+ * @LastEditTime: 2023-04-24 23:43:32
+ * @FilePath: \book-front\src\views\HomeView.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!--
+ * @Author: 鹏程 李 1494205676@qq.com
+ * @Date: 2023-04-20 22:59:23
+ * @LastEditors: 鹏程 李 1494205676@qq.com
+ * @LastEditTime: 2023-04-24 23:12:17
  * @FilePath: \2023-04-20\book-front\src\views\HomeView.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -18,19 +26,19 @@
   <div>
     <div class="mod-user">
       <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()" class="demo-form-inline">
-        <el-from-item>
+        <el-form-item>
           <el-input v-model="dataForm.name" placeholder="请输入要查询的图书" clearable></el-input>
-        </el-from-item>
-        <el-from-item>
+        </el-form-item>
+        <el-form-item>
           <el-button type="warning" plain @click="getDataList()">查询</el-button>
           <el-button type="succuss" plain @click="addBook()">新增</el-button>
-        </el-from-item>
+        </el-form-item>
       </el-form>
 
 
       <el-table :data="dataList" border v-loading="dataListLoading" style="width: 100%">
-        <el-table-column prop="id" header-align="center" align="center" width="180" label="序号"></el-table-column>
-        <el-table-column header-align="center" align="center" width="180" label="图片">
+        <el-table-column prop="id" header-align="center" align="center" width="120" label="序号"></el-table-column>
+        <el-table-column header-align="center" align="center" width="120" label="图片">
           <template v-slot="scope">
             <img v-if="scope.row.picture != undefined" :src="scope.row.picture" lazy style="width: 100px; height: 80px;" />
           </template>
@@ -38,9 +46,9 @@
         <el-table-column prop="name" header-align="center" align="center" width="180" label="书名"></el-table-column>
         <el-table-column prop="auth" header-align="center" align="center" width="180" label="作者"></el-table-column>
         <el-table-column prop="introduce" header-align="center" align="center" width="340" label="介绍"></el-table-column>
-        <el-table-column prop="publish" header-align="center" align="center" width="150" label="出版社"></el-table-column>
-        <el-table-column prop="price" header-align="center" align="center" width="150" label="价格"></el-table-column>
-        <el-table-column prop="gmtCreated" header-align="center" align="center" width="150" label="出版时间"></el-table-column>
+        <el-table-column prop="publish" header-align="center" align="center" width="180" label="出版社"></el-table-column>
+        <el-table-column prop="price" header-align="center" align="center" width="70" label="价格"></el-table-column>
+        <el-table-column prop="gmtCreate" header-align="center" align="center" width="200" label="出版时间"></el-table-column>
         <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
           <template v-slot="scope">
             <el-button type="success" plain size="small">修改</el-button>
