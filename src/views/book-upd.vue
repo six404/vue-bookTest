@@ -2,7 +2,7 @@
 <template>
     <h3 class="dialog-head">修改图书</h3>
     <div class='mody-body'>
-      <el-form :model="dataForm" :rules="dataRure" ref="dataForm" label-width="120px">
+      <el-form v-model="dataForm" :rules="dataRure" ref="dataForm" label-width="120px">
           <el-form-item label="书本编号" prop="id">
             <el-input v-model="dataForm.id" type="input" style="width:350px;" disabled></el-input>
           </el-form-item>
@@ -36,7 +36,7 @@
           </el-form-item>
         </el-form>
         <span class="dialog-footer">
-          <template><el-button type="primary" @click="dataFormSubmit()">确定修改</el-button></template>
+          <el-button type="primary" @click="dataFormSubmit()">确定修改</el-button>
         </span>
     </div>
   </template>
@@ -50,6 +50,13 @@
     //import引入的组件需要注入到对象中才能使用
     components: {},
       data() {
+        var validateContent = (rule, value, callback) => {
+            if (!this.dataForm.content && !/\S/.test(value)) {
+              callback(new Error('内容不能为空'))
+            } else {
+              callback()
+            }
+          }
       //这里存放数据
         return {
           dataForm:{
@@ -60,8 +67,24 @@
             introduce:'',
             price:''
           },
-          fileList:[]
-  
+          fileList:[],
+          dataRule:{
+            name:[
+            {required:true,message:'不能为空',trigger:'blur'}
+            ],
+            auth:[
+            {required:true,message:'不能为空',trigger:'blur'}
+            ],
+            introduce:[
+            {required:true,message:'不能为空',trigger:'blur'}
+            ],
+            publish:[
+            {required:true,message:'不能为空',trigger:'blur'}
+            ],
+            price:[
+            {required:true,message:'不能为空',trigger:'blur'}
+            ]
+          }
         };
       },
     //监听属性 类似于data概念
@@ -85,6 +108,8 @@
             this.dataForm.price = data.price
             this.dataForm.publish = data.publish         
           }
+        }).catch((error)=>{
+          console.log(error);
         })
       },
       handleRemove(file, fileList) {
