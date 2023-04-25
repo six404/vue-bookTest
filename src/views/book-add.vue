@@ -13,7 +13,7 @@
             :file-list="fileList"
             list-type="picture">
             <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            <div class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
         </el-form-item>
         <el-form-item label="书名" prop="name">
@@ -32,7 +32,7 @@
           <el-input v-model="dataForm.price" type="input" placeholder="请填写图书价格" style="width:350px;"></el-input>
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer">
+      <span class="dialog-footer">
         <el-button type="primary" @click="dataFormSubmit()">确定添加</el-button>
       </span>
   </div>
@@ -118,8 +118,8 @@ export default {
   beforeMount() {}, //生命周期 - 挂载之前
   beforeUpdate() {}, //生命周期 - 更新之前
   updated() {}, //生命周期 - 更新之后
-  beforeDestroy() {}, //生命周期 - 销毁之前
-  destroyed() {}, //生命周期 - 销毁完成
+  beforeUnmount() {}, //生命周期 - 销毁之前
+  unmounted() {}, //生命周期 - 销毁完成
   activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 }
 </script>
