@@ -2,7 +2,7 @@
 <template>
   <h3 class="dialog-head">新增图书</h3>
   <div class='mody-body'>
-    <el-form v-model="dataForm" :rules="dataRure" ref="dataForm" label-width="120px">
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" label-width="120px">
         <el-form-item label="书本图片" prop="picture">
           <el-upload
             class="upload-demo"
@@ -47,6 +47,13 @@ export default {
   //import引入的组件需要注入到对象中才能使用
   components: {},
     data() {
+      var validateContent = (rule, value, callback) => {
+          if (!this.dataForm.content && !/\S/.test(value)) {
+            callback(new Error('内容不能为空'))
+          } else {
+            callback()
+          }
+        }
     //这里存放数据
       return {
         dataForm:{
@@ -58,8 +65,24 @@ export default {
           introduce:'',
           price:''
         },
-        fileList:[]
-
+        fileList:[],
+        dataRule:{
+          name:[
+          {required:true,message:'不能为空',trigger:'blur'}
+          ],
+          auth:[
+          {required:true,message:'不能为空',trigger:'blur'}
+          ],
+          introduce:[
+          {required:true,message:'不能为空',trigger:'blur'}
+          ],
+          publish:[
+          {required:true,message:'不能为空',trigger:'blur'}
+          ],
+          price:[
+          {required:true,message:'不能为空',trigger:'blur'}
+          ]
+        }
       };
     },
   //监听属性 类似于data概念
@@ -79,30 +102,34 @@ export default {
       this.dataForm.picture = file.response.data
     },
     dataFormSubmit(){
-      this.param = {
-        'picture':this.dataForm.picture,
-        'name':this.dataForm.name,
-        'introduce':this.dataForm.introduce,
-        'publish':this.dataForm.publish,
-        'auth':this.dataForm.auth,
-        'price':this.dataForm.price
-      }
-      addOneBookInfo(this.param).then((resp)=>{
-        console.log("调用addOneBookInfo方法返回的数据:", resp.data);
-        const{code, message} = resp.data
-        if(code === '00000'){
-          this.$message({
-            message: message,
-            type: 'success',
-            duration : 1500,
-            onClose:()=>{
-              this.dataForm = {}
-              this.$router.push({path:'/'})
+      this.$refs['dataForm'].validate((valid)=>{
+        if(valid){
+          this.param = {
+            'picture':this.dataForm.picture,
+            'name':this.dataForm.name,
+            'introduce':this.dataForm.introduce,
+            'publish':this.dataForm.publish,
+            'auth':this.dataForm.auth,
+            'price':this.dataForm.price
+          }
+          addOneBookInfo(this.param).then((resp)=>{
+            console.log("调用addOneBookInfo方法返回的数据:", resp.data);
+            const{code, message} = resp.data
+            if(code === '00000'){
+              this.$message({
+                message: message,
+                type: 'success',
+                duration : 1500,
+                onClose:()=>{
+                  this.dataForm = {}
+                  this.$router.push({path:'/'})
+                }
+              })
             }
-          });
+          }).catch((error)=>{
+            console.log(error);
+          })
         }
-      }).catch((error)=>{
-        console.log(error);
       })
     }
   },
