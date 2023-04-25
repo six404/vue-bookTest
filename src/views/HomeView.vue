@@ -2,7 +2,7 @@
  * @Author: 鹏程 李 1494205676@qq.com
  * @Date: 2023-04-20 22:59:23
  * @LastEditors: 鹏程 李 1494205676@qq.com
- * @LastEditTime: 2023-04-25 19:51:53
+ * @LastEditTime: 2023-04-25 20:54:38
  * @FilePath: \book-front\src\views\HomeView.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -52,7 +52,7 @@
         <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
           <template v-slot="scope">
             <el-button type="success" plain size="small" @click="updBookInfo(scope.row)">修改</el-button>
-            <el-button type="danger" plain size="small">删除</el-button>
+            <el-button type="danger" plain size="small" @click="deleteBookInfoById(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -73,8 +73,11 @@
 </template>
 
 <script>
-  import { getBookInfoList } from '@/api/book';
+  import { getBookInfoList, delOneBookInfo } from '@/api/book';
   export default {
+    emits:{
+
+    },
     data() {
       return {
         dataForm:{
@@ -125,8 +128,44 @@
       updBookInfo(row){
         console.log("修改书本信息的数据是：",row);
         this.$router.push({path:'book-upd/'+row.id})
+      },
+      deleteBookInfoById(row){
+        console.log("删除书本信息的数据是：",row);
+        this.param = {
+          'id':row.id
+        }
+        console.log(this.param);
+        this.$confirm('确定删除吗？','提示',{
+          confirmButtonText:'确定',
+          cancelButtonText:'取消',
+          type:'warning',
+        }).then(()=>{
+          delOneBookInfo(row).then((resp)=>{
+            console.log("调用del接口信息：",resp.data);
+            const{code} = resp.data
+            if(code === '00000'){
+            this.$message({
+              message: '删除成功！',
+              type: 'success',
+              duration : 1500,
+              onClose:()=>{
+                this.getDataList()
+              }
+            });
+          }else{
+            this.$message({
+              message:'删除失败！',
+              duration:1500,
+              onClose:()=>{
+                this.getDataList()
+              }
+            })
+          }
+          })
+        }).catch((error)=>{
+          console.log(error);
+        })
       }
-
     },
     //生命周期 创建完成
     created() {
