@@ -2,7 +2,7 @@
  * @Author: 鹏程 李 1494205676@qq.com
  * @Date: 2023-04-20 22:59:23
  * @LastEditors: 鹏程 李 1494205676@qq.com
- * @LastEditTime: 2023-04-24 23:43:32
+ * @LastEditTime: 2023-04-25 17:07:18
  * @FilePath: \book-front\src\views\HomeView.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -51,7 +51,7 @@
         <el-table-column prop="gmtCreate" header-align="center" align="center" width="200" label="出版时间"></el-table-column>
         <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
           <template v-slot="scope">
-            <el-button type="success" plain size="small">修改</el-button>
+            <el-button type="success" plain size="small" @click="updBookInfo(scope.row)">修改</el-button>
             <el-button type="danger" plain size="small">删除</el-button>
           </template>
         </el-table-column>
@@ -121,6 +121,10 @@
       },
       addBook(){
         this.$router.push({path:'book-add'})
+      },
+      updBookInfo(row){
+        console.log("修改书本信息的数据是：",row);
+        this.$router.push({path:'book-upd/'+row.id})
       }
 
     },

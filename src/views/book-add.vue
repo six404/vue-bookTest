@@ -2,7 +2,7 @@
 <template>
   <h3 class="dialog-head">新增图书</h3>
   <div class='mody-body'>
-    <el-form :model="dataForm" :rules="dataRure" ref="dataForm" label-width="120px">
+    <el-form v-model="dataForm" :rules="dataRure" ref="dataForm" label-width="120px">
         <el-form-item label="书本图片" prop="picture">
           <el-upload
             class="upload-demo"
@@ -20,16 +20,16 @@
           <el-input v-model="dataForm.name" type="input" placeholder="请填写书名" style="width:350px;"></el-input>
         </el-form-item>
         <el-form-item label="作者" prop="auth">
-          <el-input :model="dataForm.name" type="input" placeholder="请填写作者名" style="width:350px;"></el-input>
+          <el-input v-model="dataForm.auth" type="input" placeholder="请填写作者名" style="width:350px;"></el-input>
         </el-form-item>
         <el-form-item label="出版社" prop="publish">
-          <el-input :model="dataForm.name" type="input" placeholder="请填写出版社名称" style="width:350px;"></el-input>
+          <el-input v-model="dataForm.publish" type="input" placeholder="请填写出版社名称" style="width:350px;"></el-input>
         </el-form-item>
         <el-form-item label="介绍" prop="introduce">
-          <el-input :model="dataForm.name" type="textarea" :row="2" placeholder="请填写图书介绍" style="width:350px;"></el-input>
+          <el-input v-model="dataForm.introduce" type="textarea" :row="2" placeholder="请填写图书介绍" style="width:350px;"></el-input>
         </el-form-item>
         <el-form-item label="价格" prop="price">
-          <el-input :model="dataForm.name" type="input" placeholder="请填写图书价格" style="width:350px;"></el-input>
+          <el-input v-model="dataForm.price" type="input" placeholder="请填写图书价格" style="width:350px;"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -95,7 +95,7 @@ export default {
             message: message,
             type: 'success',
             duration : 1500,
-            onclose:()=>{
+            onClose:()=>{
               this.dataForm = {}
               this.$router.push({path:'/'})
             }
